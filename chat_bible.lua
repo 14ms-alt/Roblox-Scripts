@@ -12,7 +12,7 @@ local ReplicatedStorage = game:GetService('ReplicatedStorage')
 
 local DefaultChatSystemChatEvents = ReplicatedStorage:WaitForChild('DefaultChatSystemChatEvents')
 
-if DefaultChatSystemChatEvents then
+if not DefaultChatSystemChatEvents then
 	error('This game probably uses a custom chat system')
 end
 
