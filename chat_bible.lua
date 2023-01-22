@@ -1,12 +1,6 @@
 -- SelectedBible = 'English1'
 -- SayDelay = 2.7
 
-getgenv().bible_toggled = not getgenv().bible_toggled
-
-if not getgenv().bible_toggled then
-	return
-end
-
 local HttpService = game:GetService('HttpService')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 
@@ -42,6 +36,12 @@ local Bibles = {
 
 if not Bibles[SelectedBible] then
 	error('Invalid bible type')
+end
+
+getgenv().bible_toggled = not getgenv().bible_toggled
+
+if not getgenv().bible_toggled then
+	return
 end
 
 local url = 'https://raw.githubusercontent.com/thiagobodruk/bible/master/json/' .. Bibles[SelectedBible] .. '.json'
