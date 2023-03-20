@@ -55,15 +55,15 @@ end
 local function copy_instance(reference_object: Instance, parent: Instance): Instance
 	local created_instance, success = create_instance(reference_object.ClassName, parent)
 
+	cur_instances = cur_instances + 1
+	print('Importing progress: ' .. cur_instances .. '/' .. total_instances)
+
 	if not success then
 		set_property(created_instance, 'Name', '[' .. reference_object.ClassName .. '?] ' .. reference_object.Name)
 		return created_instance
 	end
 
 	copy_properties(reference_object, created_instance)
-
-	cur_instances = cur_instances + 1
-	print('Importing progress: ' .. cur_instances .. '/' .. total_instances)
 
 	return created_instance
 end
