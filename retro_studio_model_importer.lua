@@ -87,7 +87,7 @@ local function import_asset(asset_id: number)
 	local asset_objects = game:GetObjects('rbxassetid://' .. asset_id)
 
 	for _, o in pairs(asset_objects) do
-		total_instances = total_instances + #o:GetDescendants()
+		total_instances = total_instances + #o:GetDescendants() + 1
 	end
 
 	local root_folder = create_instance('Folder', workspace)
