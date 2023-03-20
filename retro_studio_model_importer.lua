@@ -11,21 +11,21 @@ local total_instances = 0
 local cur_instances = 0
 
 -- Sets the value of the object instance property
-local function set_property(instance: Instance, property_name: string, property_value: any)
+local function set_property(instance, property_name, property_value)
 	task.spawn(function()
 		ChangeObjectProperty:InvokeServer(instance, property_name, property_value)
 	end)
 end
 
 -- Sends a request to create an object instance
-local function request_creation(class_name: string, parent: Instance): Instance
+local function request_creation(class_name, parent)
 	local ts = os.clock()
 
-	return CreateObject:InvokeServer(class_name, parent, HashLib.md5(tostring(ts) .. '\u{0D9E}'), ts)
+	return CreateObject:InvokeServer(class_name, parent, HashLib.md5(tostring(ts) .. 'ඞ'), ts)
 end
 
 -- Creates and returns an instance of the object class
-local function create_instance(class_name: string, parent: Instance): (Instance, boolean)
+local function create_instance(class_name, parent)
 	local created_instance = request_creation(class_name, parent)
 
 	-- If the requested instance was not created, the folder will be created instead
@@ -41,7 +41,7 @@ local function create_instance(class_name: string, parent: Instance): (Instance,
 	return created_instance, true
 end
 
-local function copy_properties(reference_object: Instance, instance: Instance)
+local function copy_properties(reference_object, instance)
 	local ref_props = PropertiesIds[reference_object.ClassName]
 
 	for prop_name, _ in pairs(ref_props) do
@@ -52,7 +52,7 @@ local function copy_properties(reference_object: Instance, instance: Instance)
 	end
 end
 
-local function copy_instance(reference_object: Instance, parent: Instance): Instance
+local function copy_instance(reference_object, parent)
 	local created_instance, success = create_instance(reference_object.ClassName, parent)
 
 	cur_instances = cur_instances + 1
@@ -68,7 +68,7 @@ local function copy_instance(reference_object: Instance, parent: Instance): Inst
 	return created_instance
 end
 
-local function create_children(parent: Instance, children: table<Instance>)
+local function create_children(parent, children)
 	for _, child in pairs(children) do
 		local child_children = child:GetChildren()
 
@@ -82,7 +82,7 @@ local function create_children(parent: Instance, children: table<Instance>)
 	end
 end
 
-local function import_asset(asset_id: number)
+local function import_asset(asset_id)
 	local asset_name = MarketplaceService:GetProductInfo(asset_id).Name
 	local asset_objects = game:GetObjects('rbxassetid://' .. asset_id)
 
